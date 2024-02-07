@@ -1,4 +1,3 @@
-#TODO
 Docker Image Build and AWS CloudFormation Deployment
 This repository contains a Makefile to streamline the process of building a Docker image and deploying an AWS CloudFormation stack.
 
