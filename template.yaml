@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: SAM template for deploying a containerized Lambda function from ECR
+
+Parameters:
+  ECRRepositoryUri:
+    Type: String
+    Default: '684378237653.dkr.ecr.us-east-1.amazonaws.com/parity-lambda'
+    Description: 'ECR repository URI for the container image'
+
+  
+  FunctionVersion:
+    Type: String
+    Default: 'latest'
+    Description: 'Version of the container image to deploy'
+
+Globals:
+  Function:
+    Timeout: 30
+  
+Resources:
+  LambdaFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: MyContainerLambda
+      PackageType: Image
+      ImageConfig:
+        WorkingDirectory: /
+      ImageUri: !Sub '${ECRRepositoryUri}:${FunctionVersion}'
