@@ -1,9 +1,12 @@
-# Makefile for building and pushing Docker image to ECR
-
+# constants
 AWS_REGION = us-east-1
 ECR_REPO_NAME = parity-lambda69
 DOCKER_IMAGE_NAME = r-on-lambda
 ECR_URI = 684378237653.dkr.ecr.$(AWS_REGION).amazonaws.com
+FUN_VER=latest
+STACK_NAME=MyContainerLambdaStack
+PROFILE=root
+REGION=us-east-1
 
 create-repo:
 	aws ecr create-repository --repository-name $(ECR_REPO_NAME) --image-scanning-configuration scanOnPush=true
@@ -25,25 +28,8 @@ clean:
 
 .PHONY: create-repo build tag login push clean
 
-# constants
-
-ECR_URI=684378237653.dkr.ecr.us-east-1.amazonaws.com/parity-lambda
-FUN_VER=latest
-STACK_NAME=MyContainerLambdaStack
-PROFILE=root
-REGION=us-east-1
-
 # DEPLOY
 deploy-template:
-<<<<<<< HEAD
-	aws cloudformation deploy \
-	--template-file ./template.yaml \
-	--stack-name MyContainerLambdaStack \
-	--capabilities CAPABILITY_IAM --profile root --region us-east-1 \
-	--parameter-overrides \
-		ECRRepositoryUri= ${ECRRepositoryUri}\
-		FunctionVersion= ${FunctionVersion}
-=======
 	aws cloudformation deploy\
     --template-file ./template.yaml\
     --stack-name $(STACK_NAME)\
@@ -57,4 +43,3 @@ delete-stack:
     --stack-name $(STACK_NAME)\
     --profile $(PROFILE)\
     --region $(REGION)
->>>>>>> 34a8f75325ad805491eaff622f47b18721a52418

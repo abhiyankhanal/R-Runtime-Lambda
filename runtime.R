@@ -3,4 +3,4 @@ parity <- function(number) {
 }
 
 lambdr::start_lambda()
-This is the handler for lambda
+This is the handler for lambda and entry point as well
